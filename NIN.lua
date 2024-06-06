@@ -37,7 +37,7 @@ local sets = {
         Feet = 'Fuma Sune-Ate', --3%
     },
 	
-	TankingTP_Priority = {
+	EvasionTP_Priority = {
         Head = 'Arh. Jinpachi +1',
         Neck = 'Peacock Amulet',
         Ear1 = 'Novia Earring',
@@ -130,6 +130,30 @@ local sets = {
 	
 };
 
+local staves = {
+	--Update with HQ as you get them.
+    ['Fire'] = 'Vulcan\'s Staff',
+    ['Earth'] = 'Terra\'s Staff',
+    ['Water'] = 'Neptune\'s Staff',
+    ['Wind'] = 'Auster\'s Staff',
+    ['Ice'] = 'Aquilo\'s Staff',
+    ['Thunder'] = 'Jupiter\'s Staff',
+    ['Light'] = 'Apollo\'s Staff',
+    ['Dark'] = 'Pluto\'s Staff'
+}
+
+local obis = {
+	--Uncomment as you get them.
+    --['Fire'] = 'Karin Obi',
+    --['Earth'] = 'Dorin Obi',
+    --['Water'] = 'Suirin Obi',
+    --['Wind'] = 'Furin Obi',
+    --['Ice'] = 'Hyorin Obi',
+    --['Thunder'] = 'Rairin Obi',
+    --['Light'] = 'Korin Obi',
+    --['Dark'] = 'Anrin Obi'
+}
+
 profile.Sets = sets;
 
 profile.OnLoad = function()
@@ -139,7 +163,7 @@ profile.OnLoad = function()
     AshitaCore:GetChatManager():QueueCommand(1, '/macro book 5');
     AshitaCore:GetChatManager():QueueCommand(1, '/macro set 1');
     AshitaCore:GetChatManager():QueueCommand(-1, '/alias /nin /lac fwd');
-	AshitaCore:GetChatManager():QueueCommand(-1, '/bind F9 /nin tankingMode');
+	AshitaCore:GetChatManager():QueueCommand(-1, '/bind F9 /nin NinjaMode');
 end
 
 profile.OnUnload = function()
@@ -149,7 +173,7 @@ end
 
 local Settings = {
 	player = gData.GetPlayer(),
-	tankingMode = 1,
+	NinjaMode = 0,
 	CurrentLevel = 0,
 };
 
@@ -157,13 +181,16 @@ local Settings = {
 profile.HandleCommand = function(args)
 
 	--Tanking Mode Toggle
-    if (args[1] == 'tankingMode') then
-        if (Settings.tankingMode == 1) then
-            gFunc.Echo(158, "Tanking Mode OFF")
-            Settings.tankingMode = 0
-        else
-            gFunc.Echo(158, "Tanking Mode ON")
-            Settings.tankingMode = 1
+    if (args[1] == 'NinjaMode') then
+        if (Settings.NinjaMode == 0) then
+            gFunc.Echo(158, "Staff Mode ACTIVATED")
+            Settings.NinjaMode = 1
+        elseif (Settings.NinjaMode == 1) then
+            gFunc.Echo(158, "Evasion Mode ACTIVATED")
+            Settings.NinjaMode = 2
+		elseif (Settings.NinjaMode == 2) then
+			gFunc.Echo(158, "Katana Mode ACTIVATED")
+			Settings.NinjaMode = 0
         end
     end	
 	
@@ -187,10 +214,11 @@ profile.HandleDefault = function()
 
 	--Gear change setups
     if player.Status == 'Engaged' then
-        if (Settings.tankingMode == 1) then
-			gFunc.EquipSet(sets.TankingTP);
-		elseif (Settings.tankingMode == 0) then
+        if (Settings.NinjaMode == 2) then
+			gFunc.EquipSet(sets.EvasionTP);
+		elseif (Settings.NinjaMode == 0) then
 			gFunc.EquipSet(sets.TP);
+		else
 		end
     elseif (player.Status == 'Resting') then
         gFunc.EquipSet(sets.Resting);
