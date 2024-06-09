@@ -14,7 +14,7 @@ local sets = {
         Back = 'Gigant Mantle',
         Waist = 'Warwolf Belt',
         Legs = 'Dst. Subligar +1',
-        Feet = 'Ninja Kyahan',
+        Feet = 'Nin. Kyahan +1',
     },
 	
 	Resting_Priority = {
@@ -95,7 +95,7 @@ local sets = {
 		Ring2 = 'Snow Ring',
         Waist = 'Koga Sarashi',
 		Legs = 'Yasha Hakama',
-		Feet = 'Ysh. Sune-Ate +1',
+		Feet = 'Nin. Kyahan +1',
 	},
 	
 	Enmity_Priority = {
@@ -121,7 +121,7 @@ local sets = {
     },
 	
 	Movement = {
-        Feet = 'Ninja Kyahan',
+        Feet = 'Nin. Kyahan +1',
 	},
 	
     Regen_Priority = {
@@ -163,7 +163,6 @@ profile.OnLoad = function()
     AshitaCore:GetChatManager():QueueCommand(1, '/macro book 5');
     AshitaCore:GetChatManager():QueueCommand(1, '/macro set 1');
     AshitaCore:GetChatManager():QueueCommand(-1, '/alias /nin /lac fwd');
-	AshitaCore:GetChatManager():QueueCommand(-1, '/bind F9 /nin NinjaMode');
 end
 
 profile.OnUnload = function()
@@ -173,26 +172,52 @@ end
 
 local Settings = {
 	player = gData.GetPlayer(),
-	NinjaMode = 0,
+	KatanaMode = true,
+	EvasionMode = false,
+	StaffMode = false,
 	CurrentLevel = 0,
 };
 
 
 profile.HandleCommand = function(args)
 
-	--Tanking Mode Toggle
-    if (args[1] == 'NinjaMode') then
-        if (Settings.NinjaMode == 0) then
-            gFunc.Echo(158, "Staff Mode ACTIVATED")
-            Settings.NinjaMode = 1
-        elseif (Settings.NinjaMode == 1) then
-            gFunc.Echo(158, "Evasion Mode ACTIVATED")
-            Settings.NinjaMode = 2
-		elseif (Settings.NinjaMode == 2) then
-			gFunc.Echo(158, "Katana Mode ACTIVATED")
-			Settings.NinjaMode = 0
-        end
-    end	
+	--Old Mode Toggles, deprecated for individual toggles for macro purposes
+    -- if (args[1] == 'NinjaMode') then
+        -- if (Settings.NinjaMode == 0) then
+            -- gFunc.Echo(158, "Staff Mode ACTIVATED")
+            -- Settings.NinjaMode = 1
+        -- elseif (Settings.NinjaMode == 1) then
+            -- gFunc.Echo(158, "Evasion Mode ACTIVATED")
+            -- Settings.NinjaMode = 2
+		-- elseif (Settings.NinjaMode == 2) then
+			-- gFunc.Echo(158, "Katana Mode ACTIVATED")
+			-- Settings.NinjaMode = 0
+        -- end
+    -- end	
+	
+	--KatanaMode Toggle
+	if (args[1] == 'KatanaMode') then
+		gFunc.Echo(158, "Katana Mode ACTIVATED")
+		Settings.KatanaMode = true
+		Settings.EvasionMode = false
+		Settings.StaffMode = true
+	end
+	
+	--EvasionMode Toggle
+	if (args[1] == 'EvasionMode') then
+		gFunc.Echo(158, "Evasion Mode ACTIVATED")
+		Settings.KatanaMode = false
+		Settings.EvasionMode = true
+		Settings.StaffMode = false
+	end
+	
+	--StaffMode Toggle
+	if (args[1] == 'StaffMode') then
+		gFunc.Echo(158, "Staff Mode ACTIVATED")
+		Settings.KatanaMode = false
+		Settings.EvasionMode = false
+		Settings.StaffMode = true
+	end
 	
 end
 
@@ -214,9 +239,9 @@ profile.HandleDefault = function()
 
 	--Gear change setups
     if player.Status == 'Engaged' then
-        if (Settings.NinjaMode == 2) then
+        if (Settings.EvasionMode == true) then
 			gFunc.EquipSet(sets.EvasionTP);
-		elseif (Settings.NinjaMode == 0) then
+		elseif (Settings.KatanaMode == true) then
 			gFunc.EquipSet(sets.TP);
 		else
 		end

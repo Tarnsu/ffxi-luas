@@ -6,7 +6,7 @@ local Settings = {
 
 local sets = {
     Idle = {
-        Head = 'Darksteel Cap',
+        Head = 'Darksteel Cap +1',
         Neck = 'Uggalepih Pendant',
         Ear1 = 'Merman\'s Earring',
         Ear2 = 'Ethereal Earring',
@@ -25,6 +25,7 @@ local sets = {
 	},
 		
 	TP = {
+		Ammo = 'Tiphia Sting',
         Head = 'Ace\'s helm',
         Neck = 'Love Torque',
         Ear1 = 'Beastly Earring',
@@ -50,7 +51,7 @@ local sets = {
         Ring2 = 'Rajas Ring',
         Back = 'Forager\'s Mantle',
         Waist = 'Wyrm Belt',
-        Legs = 'Wym. Brais +1',
+        Legs = 'Barone Cosciales',
         Feet = 'Hct. Leggings',
     },
 	

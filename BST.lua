@@ -58,7 +58,7 @@ end
 
 local sets = {
     Idle_Default = {
-        Head = 'Darksteel Cap',
+        Head = 'Darksteel Cap +1',
         Neck = 'Uggalepih Pendant',
         Ear1 = 'Merman\'s Earring',
         Ear2 = 'Merman\'s Earring',
@@ -85,7 +85,7 @@ local sets = {
 		 Feet = 'Angler\'s Boots',
     },
 	Idle_PDT = {
-		Head = 'Darksteel Cap +1',
+		Head = 'Darksteel Cap +1 +1',
 		Ear1 = 'Merman\'s Earring',
 		Ear2 = 'Merman\'s Earring',
 		Body = 'Dst. Harness +1',
@@ -102,8 +102,7 @@ local sets = {
 		Head = 'Ogre mask',
 		Neck = 'Uggalepih Pendant',
 		Ear1 = 'Loquac. Earring',
-		Body = 'Kirin\'s osode',	
-		Hands = 'Savage Gauntlets',
+		Body = 'Kirin\'s osode',
 		Legs = 'Savage Loincloth',
 		Ring1 = 'ether ring',
 		Ring2 = 'astral ring',
@@ -116,7 +115,7 @@ local sets = {
         Head = 'Panther Mask',
         Neck = 'Peacock Amulet',
         Ear1 = 'Beastly Earring',
-        Ear2 = 'Merman\'s Earring',
+        Ear2 = 'Stealth Earring',
         Body = 'Haubergeon',
         Hands = 'Dusk Gloves',
         Ring1 = 'Rajas Ring',
@@ -138,7 +137,7 @@ local sets = {
         Ring2 = 'Toreador\'s Ring',
         Back = 'Forager\'s Mantle',
         Waist = 'Swift Belt',
-        Legs = 'Ryl.Kgt. Breeches',
+        Legs = 'Savage Loincloth',
         Feet = 'Luisant Sollerets',
     },
 		Tp_60 = {
@@ -152,7 +151,7 @@ local sets = {
         Ring2 = 'Toreador\'s Ring',
         Back = 'Beak Mantle',
         Waist = 'Swift Belt',
-        Legs = 'Ryl.Kgt. Breeches',
+        Legs = 'Savage Loincloth',
         Feet = 'Luisant Sollerets',
     },
 		Tp_63 = {
@@ -166,7 +165,7 @@ local sets = {
         Ear1 = 'Beetle Earring',
         Ear2 = 'Beetle Earring',
         Body = 'Savage Separates',
-        Hands = 'Savage Gauntlets',
+        Hands = 'Shep. Bracers',
         Ring1 = 'Sniper\'s Ring',
         Ring2 = 'Venerer Ring',
         Back = 'Raptor Mantle',
@@ -176,7 +175,7 @@ local sets = {
     },
 	
     Resting_Default = {
-		Head = 'Darksteel Cap +1',
+		Head = 'Darksteel Cap +1 +1',
 		Ear1 = 'Relaxing earring',
 		Ear2 = 'Merman\'s Earring',
 		Body = 'Dst. Harness +1',
@@ -193,7 +192,7 @@ local sets = {
 		ear2 = 'Relaxing earring',
     },
 	Resting_PDT = {
-		Head = 'Darksteel Cap +1',
+		Head = 'Darksteel Cap +1 +1',
 		Ear1 = 'Merman\'s Earring',
 		Ear2 = 'Merman\'s Earring',
 		Body = 'Dst. Harness +1',
@@ -222,7 +221,7 @@ local sets = {
     },
 	Reward = {
 	    Feet = 'Monster Gaiters',
-	    Body = 'Beast jackcoat',
+	    Body = 'Kirin\'s Osode',
 		Hands = 'Ogre Gloves',
     },	
 	
@@ -246,7 +245,7 @@ local sets = {
 		Legs = 'Gallant Breeches',
      },		
 	PDT = {
-		Head = 'Darksteel Cap +1',
+		Head = 'Darksteel Cap +1 +1',
 		Body = 'Dst. Harness +1',
 		Hands = 'Dst. Mittens +1',
 		Ring1 = 'Jelly ring',
@@ -260,8 +259,8 @@ local sets = {
 	},	
 		
 	Mind = {
+		Body = 'Kirin\'s Osode',
 		Waist = 'Friar\'s Rope',
-		Hands = 'Savage gauntlets',
 		Legs = 'Savage Loincloth',
 		Feet = 'Ogre Ledelsens',
 	},
