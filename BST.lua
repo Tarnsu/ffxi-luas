@@ -242,7 +242,7 @@ local sets = {
     },
 	
 	Enhancing = {
-		Legs = 'Gallant Breeches',
+
      },		
 	PDT = {
 		Head = 'Darksteel Cap +1 +1',
@@ -259,6 +259,7 @@ local sets = {
 	},	
 		
 	Mind = {
+		Neck = 'Promise Badge',
 		Body = 'Kirin\'s Osode',
 		Waist = 'Friar\'s Rope',
 		Legs = 'Savage Loincloth',

@@ -102,8 +102,7 @@ local sets = {
     },
 	
     SpiritLink = {
-        Neck = 'Justice Badge',
-        Hands = 'Savage Gauntlets',
+        Neck = 'Promise Badge',
         Ring1 = 'Aqua Ring',
         Ring2 = 'Aqua Ring',
         Legs = 'Savage Loincloth',
