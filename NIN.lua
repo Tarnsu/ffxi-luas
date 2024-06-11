@@ -14,7 +14,7 @@ local sets = {
         Back = 'Gigant Mantle',
         Waist = 'Warwolf Belt',
         Legs = 'Dst. Subligar +1',
-        Feet = 'Nin. Kyahan +1',
+        Feet = 'Dst. Leggings +1',
     },
 	
 	Resting_Priority = {
@@ -175,6 +175,8 @@ local Settings = {
 	KatanaMode = true,
 	EvasionMode = false,
 	StaffMode = false,
+	EnmityMode = false,
+	DTModifier = false,
 	CurrentLevel = 0,
 };
 
@@ -200,7 +202,8 @@ profile.HandleCommand = function(args)
 		gFunc.Echo(158, "Katana Mode ACTIVATED")
 		Settings.KatanaMode = true
 		Settings.EvasionMode = false
-		Settings.StaffMode = true
+		Settings.StaffMode = false
+		Settings.EnmityMode = false
 	end
 	
 	--EvasionMode Toggle
@@ -209,6 +212,7 @@ profile.HandleCommand = function(args)
 		Settings.KatanaMode = false
 		Settings.EvasionMode = true
 		Settings.StaffMode = false
+		Settings.EnmityMode = false
 	end
 	
 	--StaffMode Toggle
@@ -217,12 +221,50 @@ profile.HandleCommand = function(args)
 		Settings.KatanaMode = false
 		Settings.EvasionMode = false
 		Settings.StaffMode = true
+		Settings.EnmityMode = false
+	end
+	
+	--EnmityMode Toggle
+	if (args[1] == 'EnmityMode') then
+		gFunc.Echo(158, "Enmity Mode ACTIVATED")
+		Settings.KatanaMode = false
+		Settings.EvasionMode = false
+		Settings.StaffMode = false
+		Settings.EnmityMode = true
+	end
+	
+	--PDTModifier Toggle
+	if (args[1] == 'PDTModifier') then
+		if (Settings.PDTModifier == false) then
+			gFunc.Echo(158, "PDT Modifier ACTIVATED")
+			Settings.PDTModifier = true
+			Settings.DTModifier = true
+		else
+			gFunc.Echo(158, "PDT Modifier DEACTIVATED")
+			Settings.PDTModifier = false
+			Settings.DTModifier = false
+		end
+	end
+
+	--MDTModifier Toggle
+	if (args[1] == 'MDTModifier') then
+		if (Settings.MDTModifier == false) then
+			gFunc.Echo(158, "MDT Modifier ACTIVATED")
+			Settings.MDTModifier = true
+			Settings.DTModifier = true
+		else
+			gFunc.Echo(158, "MDT Modifier DEACTIVATED")
+			Settings.MDTModifier = false
+			Settings.DTModifier = false
+		end
 	end
 	
 end
 
 profile.HandleDefault = function()
 	local player = gData.GetPlayer();
+	local environment = gData.GetEnvironment();
+	local moving = gData.GetPlayer().IsMoving;
 	local myLevel = AshitaCore:GetMemoryManager():GetPlayer():GetMainJobLevel();
     if (myLevel ~= Settings.CurrentLevel) then
         gFunc.EvaluateLevels(profile.Sets, myLevel);
@@ -238,11 +280,46 @@ profile.HandleDefault = function()
     end	
 
 	--Gear change setups
+	--Engage Sets
     if player.Status == 'Engaged' then
         if (Settings.EvasionMode == true) then
-			gFunc.EquipSet(sets.EvasionTP);
+			if (Settings.DTModifier == false) then
+				if (environment.Time < 6.00 or environment.Time > 18.00) then
+					gFunc.EquipSet(sets.EvasionTP);
+					gFunc.Equip('Hands', 'Koga Tekko');
+				else
+					gFunc.EquipSet(sets.EvasionTP);
+				end
+			else
+			--add functionality to incorporate a DT set instead of a copy of the above
+				gFunc.EquipSet(sets.EvasionTP);
+			end
 		elseif (Settings.KatanaMode == true) then
-			gFunc.EquipSet(sets.TP);
+			if (Settings.DTModifier == false) then
+				if (environment.Time < 6.00 or environment.Time > 18.00) then
+					gFunc.EquipSet(sets.TP);
+					gFunc.Equip('Hands', 'Koga Tekko');
+				else
+					gFunc.EquipSet(sets.TP);
+				end
+			else
+			--add functionality to incorporate a DT set instead of a copy of the above
+				gFunc.EquipSet(sets.TP);
+			end
+		elseif (Settings.StaffMode == true) then
+			if (Settings.DTModifier == false) then
+				gFunc.EquipSet(sets.StaffTP);
+			else
+			--add functionality to incorporate a DT set instead of a copy of the above
+				gFunc.EquipSet(sets.StaffTP);
+			end
+		elseif (Settings.EnmityMode == true) then
+			if (Settings.DTModifier == false) then
+				gFunc.EquipSet(sets.TankingTP);
+			else
+			--add functionality to incorporate a DT set instead of a copy of the above
+				gFunc.EquipSet(sets.TankingTP);
+			end
 		else
 		end
     elseif (player.Status == 'Resting') then
@@ -253,8 +330,8 @@ profile.HandleDefault = function()
 		gFunc.EquipSet(sets.Idle);
     end
 	
-	if (player.IsMoving == true) then
-		gFunc.EquipSet(sets.Movement);
+	if (player.IsMoving == true) and (environment.Time > 7.00 or environment.Time < 17.00) then
+		gFunc.Equip('Feet', 'Nin. Kyahan +1');
 	end
 	
 	if (player.SubJob == 'WHM') or (player.SubJob == 'RDM') then
@@ -299,7 +376,9 @@ end
 profile.HandlePrecast = function()
     local spell = gData.GetAction();
     
-	gFunc.EquipSet(sets.Precast);
+	if (Settings.DTModifier == false) then
+		gFunc.EquipSet(sets.Precast);
+	end	
 	
 end
 
