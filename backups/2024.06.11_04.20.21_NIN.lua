@@ -117,7 +117,7 @@ local sets = {
         Feet = 'Luisant Sollerets',
     },
 	
-	--!!!!!!!!!!NOTE: UPDATE gearFastCast IN HandleMidcast FUNCTION IF PRECAST SET CHANGES!!!!!!!!!!
+	--NOTE: UPDATE gearFastCast IN HandleMidcast FUNCTION IF PRECAST SET CHANGES
 	Precast_Priority = {
 		Ear1 = 'Loquacious Earring', --0.03
 	},
@@ -176,11 +176,6 @@ local sets = {
 	
     Regen_Priority = {
 	
-    },
-	
-    NinjutsuSkill = {
-        Ear2 = 'Stealth Earring',
-        Waist = 'Koga Sarashi',
     },
 
 	
@@ -459,14 +454,13 @@ profile.HandleMidcast = function()
 	local target = gData.GetActionTarget();
     local me = gData.GetPlayer().Name
 	local NinNukes = T{'Katon: Ichi', 'Katon: Ni', 'Hyoton: Ichi', 'Hyoton: Ni', 'Huton: Ichi', 'Huton: Ni', 'Doton: Ichi', 'Doton: Ni', 'Raiton: Ichi', 'Raiton: Ni', 'Suiton: Ichi', 'Suiton: Ni'}
-	local EnmitySpells = T{'Kurayami: Ni', 'Hojo: Ni', 'Stun', 'Sleep', 'Bind', 'Aspir', 'Dispel', 'Cure III', 'Curaga', 'Curaga II'}
 	--Fast cast amount, expressed as a %, e.g. 0.1 = 10% fast cast.  Variable changes for /rdm vs. not /rdm filled below.
 	local fastCastValue;
 	--Constant handling time in seconds to leave before spell completion.  Note: Up to 400ms of wait from packet handling.
 	local minimumBuffer = 0.60;
 	
 	--fastCastValue handling
-	--!!!!!!!!!NOTE: UPDATE gearFastCast VALUE IF PRECAST SET CHANGES!!!!!!!!!!!
+	--NOTE: UPDATE gearFastCast VALUE IF PRECAST SET CHANGES
 	local gearFastCast = 0.03
 	if (player.SubJob == 'RDM') then
 		if (Settings.DTModifier == true) then
@@ -485,8 +479,8 @@ profile.HandleMidcast = function()
 	--set castDelay Variable
 	local castDelay = ((spell.CastTime * (1 - fastCastValue)) / 1000) - minimumBuffer;
 	
-	--Ninjutsu spell handling; note MidCastDelays, checks for defense modifiers other than pdt, koga tekko handling, and ele staff handling
     if spell.Skill == 'Ninjutsu' then
+		--add complexity
         if (NinNukes:contains(spell.Name)) then
 			if (Settings.MDTModifier == true) then
 				gFunc.InterimEquipSet(sets.MDT);
@@ -505,187 +499,31 @@ profile.HandleMidcast = function()
             gFunc.EquipSet(sets.Sneak)
 		elseif string.match(spell.Name, 'Tonko: Ichi') and (target.Name == me) then
             gFunc.EquipSet(sets.Invisible);
-		elseif (EnmitySpells:contains(spell.Name)) then
-			if (Settings.EnmityMode == true) then
-				if (Settings.MDTModifier == true) then
-					gFunc.InterimEquipSet(sets.MDT);
-					gFunc.SetMidDelay(castDelay);
-					gFunc.EquipSet(sets.Enmity);
-				elseif (Settings.FRModifier == true) then
-					gFunc.InterimEquipSet(sets.FR);
-					gFunc.SetMidDelay(castDelay);
-					gFunc.EquipSet(sets.Enmity);
-				else
-					gFunc.InterimEquipSet(sets.PDT);
-					gFunc.SetMidDelay(castDelay);
-					gFunc.EquipSet(sets.Enmity);
-				end
-			elseif (Settings.StaffMode == true) then
-				if (Settings.MDTModifier == true) then
-					gFunc.InterimEquipSet(sets.MDT);
-					gFunc.SetMidDelay(castDelay);
-					gFunc.EquipSet(gFunc.Combine(sets.Enmity,sets.NinjutsuSkill));
-					gFunc.Equip('main', staves[spell.Element]);
-				elseif (Settings.FRModifier == true) then
-					gFunc.InterimEquipSet(sets.FR);
-					gFunc.SetMidDelay(castDelay);
-					gFunc.EquipSet(gFunc.Combine(sets.Enmity,sets.NinjutsuSkill));
-					gFunc.Equip('main', staves[spell.Element]);
-				else
-					gFunc.InterimEquipSet(sets.PDT);
-					gFunc.SetMidDelay(castDelay);
-					gFunc.EquipSet(gFunc.Combine(sets.Enmity,sets.NinjutsuSkill));
-					gFunc.Equip('main', staves[spell.Element]);
-				end
-			end
 		else
 			if (Settings.MDTModifier == true) then
 				gFunc.InterimEquipSet(sets.MDT);
 				gFunc.SetMidDelay(castDelay);
-				if (environment.Time < 6.00 or environment.Time > 18.00) then
-					gFunc.EquipSet(gFunc.Combine(sets.Haste,sets.NinjutsuSkill));
-					gFunc.Equip('Hands', 'Koga Tekko');
-					if (Settings.StaffMode == true or Settings.EnmityMode == true) then
-						gFunc.Equip('main', staves[spell.Element]);
-					end
-				else
-					gFunc.EquipSet(gFunc.Combine(sets.Haste,sets.NinjutsuSkill));
-					if (Settings.StaffMode == true or Settings.EnmityMode == true) then
-						gFunc.Equip('main', staves[spell.Element]);
-					end
-				end
+				gFunc.EquipSet(gFunc.Combine(sets.Haste,sets.NinjutsuSkill);
 			elseif (Settings.FRModifier == true) then
 				gFunc.InterimEquipSet(sets.FR);
 				gFunc.SetMidDelay(castDelay);
-				if (environment.Time < 6.00 or environment.Time > 18.00) then
-					gFunc.EquipSet(gFunc.Combine(sets.Haste,sets.NinjutsuSkill));
-					gFunc.Equip('Hands', 'Koga Tekko');
-					if (Settings.StaffMode == true or Settings.EnmityMode == true) then
-						gFunc.Equip('main', staves[spell.Element]);
-					end
-				else
-					gFunc.EquipSet(gFunc.Combine(sets.Haste,sets.NinjutsuSkill));
-					if (Settings.StaffMode == true or Settings.EnmityMode == true) then
-						gFunc.Equip('main', staves[spell.Element]);
-					end
-				end
+				gFunc.EquipSet(gFunc.Combine(sets.Haste,sets.NinjutsuSkill);
 			else
 				gFunc.InterimEquipSet(sets.PDT);
 				gFunc.SetMidDelay(castDelay);
-				if (environment.Time < 6.00 or environment.Time > 18.00) then
-					gFunc.EquipSet(gFunc.Combine(sets.Haste,sets.NinjutsuSkill));
-					gFunc.Equip('Hands', 'Koga Tekko');
-					if (Settings.StaffMode == true or Settings.EnmityMode == true) then
-						gFunc.Equip('main', staves[spell.Element]);
-					end
-				else
-					gFunc.EquipSet(gFunc.Combine(sets.Haste,sets.NinjutsuSkill));
-					if (Settings.StaffMode == true or Settings.EnmityMode == true) then
-						gFunc.Equip('main', staves[spell.Element]);
-					end
-				end
+				gFunc.EquipSet(gFunc.Combine(sets.Haste,sets.NinjutsuSkill);
 			end
         end
-	--Enhancing spell handling; note same as Ninjutsu
 	elseif spell.Skill == 'Enhancing Magic' then
 		if string.match(spell.Name, 'Sneak') and (target.Name == me) then
 		    gFunc.EquipSet(sets.Sneak);
 		elseif string.match(spell.Name, 'Invisible') and (target.Name == me) then
             gFunc.EquipSet(sets.Invisible);
 		else 
-			if (Settings.MDTModifier == true) then
-				gFunc.InterimEquipSet(sets.MDT);
-				gFunc.SetMidDelay(castDelay);
-				if (environment.Time < 6.00 or environment.Time > 18.00) then
-					gFunc.EquipSet(sets.Haste);
-					gFunc.Equip('Hands', 'Koga Tekko');
-				else
-					gFunc.EquipSet(sets.Haste);
-				end
-			elseif (Settings.FRModifier == true) then
-				gFunc.InterimEquipSet(sets.FR);
-				gFunc.SetMidDelay(castDelay);
-				if (environment.Time < 6.00 or environment.Time > 18.00) then
-					gFunc.EquipSet(sets.Haste);
-					gFunc.Equip('Hands', 'Koga Tekko');
-				else
-					gFunc.EquipSet(sets.Haste);
-				end
-			else
-				gFunc.InterimEquipSet(sets.PDT);
-				gFunc.SetMidDelay(castDelay);
-				if (environment.Time < 6.00 or environment.Time > 18.00) then
-					gFunc.EquipSet(sets.Haste);
-					gFunc.Equip('Hands', 'Koga Tekko');
-				else
-					gFunc.EquipSet(sets.Haste);
-				end
-			end
+			gFunc.EquipSet(sets.Haste);
         end
-	--Non-ninjutsu enmity spell handling; note MidCastDelays and checks for defense modifiers other than pdt, no Koga Tekko; also note Stun staff handling
-	elseif (EnmitySpells:contains(spell.Name)) and (spell.Skill ~= 'Ninjutsu') then
-		if (string.match(spell.Name, 'Stun')) and (Settings.StaffMode == true or Settings.EnmityMode == true) then
-			if (Settings.MDTModifier == true) then
-				gFunc.InterimEquipSet(sets.MDT);
-				gFunc.SetMidDelay(castDelay);
-				gFunc.EquipSet(sets.Enmity);
-				gFunc.Equip('main', staves[spell.Element]);
-			elseif (Settings.FRModifier == true) then
-				gFunc.InterimEquipSet(sets.FR);
-				gFunc.SetMidDelay(castDelay);
-				gFunc.EquipSet(sets.Enmity);
-				gFunc.Equip('main', staves[spell.Element]);
-			else
-				gFunc.InterimEquipSet(sets.PDT);
-				gFunc.SetMidDelay(castDelay);
-				gFunc.EquipSet(sets.Enmity);
-				gFunc.Equip('main', staves[spell.Element]);
-			end
-		else
-			if (Settings.MDTModifier == true) then
-				gFunc.InterimEquipSet(sets.MDT);
-				gFunc.SetMidDelay(castDelay);
-				gFunc.EquipSet(sets.Enmity);
-			elseif (Settings.FRModifier == true) then
-				gFunc.InterimEquipSet(sets.FR);
-				gFunc.SetMidDelay(castDelay);
-				gFunc.EquipSet(sets.Enmity);
-			else
-				gFunc.InterimEquipSet(sets.PDT);
-				gFunc.SetMidDelay(castDelay);
-				gFunc.EquipSet(sets.Enmity);
-			end
-		end
-	--Misc spells; note same as Ninjutsu
 	else
-		if (Settings.MDTModifier == true) then
-			gFunc.InterimEquipSet(sets.MDT);
-			gFunc.SetMidDelay(castDelay);
-			if (environment.Time < 6.00 or environment.Time > 18.00) then
-				gFunc.EquipSet(sets.Haste);
-				gFunc.Equip('Hands', 'Koga Tekko');
-			else
-				gFunc.EquipSet(sets.Haste);
-			end
-		elseif (Settings.FRModifier == true) then
-			gFunc.InterimEquipSet(sets.FR);
-			gFunc.SetMidDelay(castDelay);
-			if (environment.Time < 6.00 or environment.Time > 18.00) then
-				gFunc.EquipSet(sets.Haste);
-				gFunc.Equip('Hands', 'Koga Tekko');
-			else
-				gFunc.EquipSet(sets.Haste);
-			end
-		else
-			gFunc.InterimEquipSet(sets.PDT);
-			gFunc.SetMidDelay(castDelay);
-			if (environment.Time < 6.00 or environment.Time > 18.00) then
-				gFunc.EquipSet(sets.Haste);
-				gFunc.Equip('Hands', 'Koga Tekko');
-			else
-				gFunc.EquipSet(sets.Haste);
-			end
-		end
+		gFunc.EquipSet(sets.Haste);
     end
 	
 end
