@@ -493,10 +493,16 @@ profile.HandleMidcast = function()
 				gFunc.InterimEquipSet(Settings.DTModifier);
 				gFunc.SetMidDelay(castDelay);
 				gFunc.EquipSet(sets.Nuke);
+				if (Settings.Mode == 'Staff') then
+					gFunc.Equip('main', staves[spell.Element]);
+				end
 			else
 				gFunc.InterimEquipSet(sets.PDT);
 				gFunc.SetMidDelay(castDelay);
 				gFunc.EquipSet(sets.Nuke);
+				if (Settings.Mode == 'Staff') then
+					gFunc.Equip('main', staves[spell.Element]);
+				end
 			end
 		--Utsu Handling
 		elseif string.match(spell.Name, 'Utsusemi') then
