@@ -382,6 +382,9 @@ profile.HandleMidcast = function()
 	--Divine Magic Spells
 	elseif (spell.Skill == 'Divine Magic') then
         gFunc.EquipSet(sets.Divine)
+		if UggyPendant(spell) then
+			gFunc.EquipSet(sets.UggyPendant)
+		end
 		gFunc.Equip('main', staves[spell.Element]);
     
     --Spell Interupt / Haste Default Set	
