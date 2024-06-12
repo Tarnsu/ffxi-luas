@@ -2,17 +2,8 @@ local profile = {};
 
 local Settings = {
 	player = gData.GetPlayer(),
-	NormalTPMode = true,
-	EvasionMode = false,
-	StaffMode = false,
-	EnmityMode = false,
-	DTModifier = false,
-	PDTModifier = false,
-	MDTModifier = false,
-	FRModifier = false,
-	IRModifier = false,
-	TRModifier = false,
-	
+	Mode = 'Normal',
+	DTModifier = 'OFF',	
 	KogaSwap = 'Dusk Gloves',
 	
 	CurrentLevel = 0,
@@ -59,7 +50,7 @@ local sets = {
 
 	},
 		
-	TP_Priority = {
+	NormalTP_Priority = {
 		Main = 'Senjuinrikio',
 		Sub = 'Fudo',
 		Ammo = 'Bomb Core',
@@ -307,159 +298,46 @@ profile.OnUnload = function()
 end
 
 profile.HandleCommand = function(args)
-
-	--Old Mode Toggles, deprecated for individual toggles for macro purposes
-    -- if (args[1] == 'NinjaMode') then
-        -- if (Settings.NinjaMode == 0) then
-            -- gFunc.Echo(158, "Staff Mode ACTIVATED")
-            -- Settings.NinjaMode = 1
-        -- elseif (Settings.NinjaMode == 1) then
-            -- gFunc.Echo(158, "Evasion Mode ACTIVATED")
-            -- Settings.NinjaMode = 2
-		-- elseif (Settings.NinjaMode == 2) then
-			-- gFunc.Echo(158, "Normal TP Mode ACTIVATED")
-			-- Settings.NinjaMode = 0
-        -- end
-    -- end	
 	
-	--NormalTPMode Toggle
-	if (args[1] == 'NormalTPMode') then
-		gFunc.Echo(158, "Normal TP Mode ACTIVATED")
-		Settings.NormalTPMode = true
-		Settings.AccuracyTPMode = false
-		Settings.EvasionMode = false
-		Settings.StaffMode = false
-		Settings.EnmityMode = false
-	end
-	
-	--AccuracyTPMode Toggle
-	if (args[1] == 'AccuracyTPMode') then
-		gFunc.Echo(158, "Accuracy TP Mode ACTIVATED")
-		Settings.NormalTPMode = false
-		Settings.AccuracyTPMode = true
-		Settings.EvasionMode = false
-		Settings.StaffMode = false
-		Settings.EnmityMode = false
-	end
-	
-	--EvasionMode Toggle
-	if (args[1] == 'EvasionMode') then
-		gFunc.Echo(158, "Evasion Mode ACTIVATED")
-		Settings.NormalTPMode = false
-		Settings.AccuracyTPMode = false
-		Settings.EvasionMode = true
-		Settings.StaffMode = false
-		Settings.EnmityMode = false
-	end
-	
-	--StaffMode Toggle
-	if (args[1] == 'StaffMode') then
-		gFunc.Echo(158, "Staff Mode ACTIVATED")
-		Settings.NormalTPMode = false
-		Settings.AccuracyTPMode = false
-		Settings.EvasionMode = false
-		Settings.StaffMode = true
-		Settings.EnmityMode = false
-	end
-	
-	--EnmityMode Toggle
-	if (args[1] == 'EnmityMode') then
-		gFunc.Echo(158, "Enmity Mode ACTIVATED")
-		Settings.NormalTPMode = false
-		Settings.AccuracyTPMode = false
-		Settings.EvasionMode = false
-		Settings.StaffMode = false
-		Settings.EnmityMode = true
-	end
-	
-	--PDTModifier Toggle
-	if (args[1] == 'PDTModifier') then
-		if (Settings.PDTModifier == false) then
-			gFunc.Echo(158, "PDT Modifier ACTIVATED")
-			Settings.PDTModifier = true
-			Settings.DTModifier = true
-			Settings.MDTModifier = false
-			Settings.FRModifier = false
-			Settings.IRModifier = false
-			Settings.TRModifier = false
-		else
-			gFunc.Echo(158, "PDT Modifier DEACTIVATED")
-			Settings.PDTModifier = false
-			Settings.DTModifier = false
-		end
-	end
-
-	--MDTModifier Toggle
-	if (args[1] == 'MDTModifier') then
-		if (Settings.MDTModifier == false) then
-			gFunc.Echo(158, "MDT Modifier ACTIVATED")
-			Settings.MDTModifier = true
-			Settings.DTModifier = true
-			Settings.PDTModifier = false
-			Settings.FRModifier = false
-			Settings.IRModifier = false
-			Settings.TRModifier = false
-		else
-			gFunc.Echo(158, "MDT Modifier DEACTIVATED")
-			Settings.MDTModifier = false
-			Settings.DTModifier = false
+	--Mode Toggle; need to make macros that send
+		--/nin mode Normal
+		--/nin mode Accuracy
+		--/nin mode Evasion
+		--/nin mode Staff
+		--/nin mode Enmity
+	--for full functionality
+		
+	if (args[1] == 'Mode') then
+		if (#args > 1) then
+			Settings.Mode = args[2];
+			gFunc.Echo(158, Settings.Mode + " Mode ACTIVATED")
 		end
 	end
 	
-	--FRModifier Toggle
-	if (args[1] == 'FRModifier') then
-		if (Settings.FRModifier == false) then
-			gFunc.Echo(158, "FR Modifier ACTIVATED")
-			Settings.FRModifier = true
-			Settings.DTModifier = true
-			Settings.PDTModifier = false
-			Settings.MDTModifier = false
-			Settings.IRModifier = false
-			Settings.TRModifier = false
-		else
-			gFunc.Echo(158, "FR Modifier DEACTIVATED")
-			Settings.FRModifier = false
-			Settings.DTModifier = false
-		end
-	end
-	
-	--IRModifier Toggle; Implement If/then checks when set acquired
-	if (args[1] == 'IRModifier') then
-		if (Settings.IRModifier == false) then
-			gFunc.Echo(158, "IR Modifier ACTIVATED")
-			Settings.IRModifier = true
-			Settings.DTModifier = true
-			Settings.PDTModifier = false
-			Settings.MDTModifier = false
-			Settings.FRModifier = false
-			Settings.TRModifier = false
-		else
-			gFunc.Echo(158, "IR Modifier DEACTIVATED")
-			Settings.IRModifier = false
-			Settings.DTModifier = false
-		end
-	end
-	
-	--TRModifier Toggle; Implement If/then checks when set acquired
-	if (args[1] == 'TRModifier') then
-		if (Settings.TRModifier == false) then
-			gFunc.Echo(158, "TR Modifier ACTIVATED")
-			Settings.TRModifier = true
-			Settings.DTModifier = true
-			Settings.PDTModifier = false
-			Settings.MDTModifier = false
-			Settings.FRModifier = false
-			Settings.IRModifier = false
-		else
-			gFunc.Echo(158, "TR Modifier DEACTIVATED")
-			Settings.TRModifier = false
-			Settings.DTModifier = false
+	--DTModifier Toggle; need to make macros that send
+		--/nin DTModifier PDT
+		--/nin DTModifier MDT
+		--/nin DTModifier FR (for Fire Resist)
+		--/nin DTModifier IR (for Ice Resist)
+		--/nin DTModifier TR (for Thunder Resist)
+	--for full functionality.  Note that sets must be filled out to be useful.
+		
+	if (args[1] == 'DTModifier') then
+		if (#args > 1) then
+			if (Settings.DTModifier == args[2]) then
+				Settings.DTModifier = 'OFF'
+				gFunc.Echo(158, "DTModifier DEACTIVATED")
+			else
+				Settings.DTModifier = args[2];
+				gFunc.Echo(158, Settings.DTModifier + " Modifier ACTIVATED")
+			end
 		end
 	end
 	
 end
 
 profile.UpdateSets = function()
+	--These define slots in various sets where Koga Tekko might be the better choice depending on time of day; KogaSwap handling present in default and midcast
 	sets.Haste_Priority.Hands = Settings.KogaSwap;
 	sets.TP_Priority.Hands = Settings.KogaSwap;
 	sets.EvasionTP_Priority.Hands = Settings.KogaSwap;
@@ -487,79 +365,32 @@ profile.HandleDefault = function()
 	--Gear change setups
 	--Engage Sets
     if player.Status == 'Engaged' then
-        if (Settings.EvasionMode == true) then
-			if (Settings.DTModifier == false) then
-				gFunc.EquipSet(sets.EvasionTP);
-			else
-				if (Settings.PDTModifier == true) then
-					gFunc.EquipSet(gFunc.Combine(sets.EvasionTP, sets.PDT));
-				elseif (Settings.MDTModifier == true) then
-					gFunc.EquipSet(gFunc.Combine(sets.EvasionTP, sets.MDT));
-				--Place FR/IR/TR Resist toggles here, mind the koga tekko if sets include hands
-				end
-			end
-		elseif (Settings.NormalTPMode == true) then
-			if (Settings.DTModifier == false) then
-				gFunc.EquipSet(sets.TP);
-			else
-				if (Settings.PDTModifier == true) then
-					gFunc.EquipSet(gFunc.Combine(sets.TP, sets.PDT));
-				elseif (Settings.MDTModifier == true) then
-					gFunc.EquipSet(gFunc.Combine(sets.TP, sets.MDT));
-				--Place FR/IR/TR Resist toggles here, mind the koga tekko if sets include hands
-				end
-			end
-		elseif (Settings.AccuracyTPMode == true) then
-			if (Settings.DTModifier == false) then
-				gFunc.EquipSet(sets.AccuracyTP);
-			else
-				if (Settings.PDTModifier == true) then
-					gFunc.EquipSet(gFunc.Combine(sets.AccuracyTP, sets.PDT));
-				elseif (Settings.MDTModifier == true) then
-					gFunc.EquipSet(gFunc.Combine(sets.AccuracyTP, sets.MDT));
-				--Place FR/IR/TR Resist toggles here, mind the koga tekko if sets include hands
-				end
-			end
-		elseif (Settings.StaffMode == true) then
-			if (Settings.DTModifier == false) then
-				gFunc.EquipSet(sets.StaffTP);
-			else
-				if (Settings.PDTModifier == true) then
-					gFunc.EquipSet(gFunc.Combine(sets.StaffTP, sets.PDT));
-				elseif (Settings.MDTModifier == true) then
-					gFunc.EquipSet(gFunc.Combine(sets.StaffTP, sets.MDT));
-				--Place FR/IR/TR Resist toggles here, mind the koga tekko if sets include hands
-				end
-			end
-		elseif (Settings.EnmityMode == true) then
-			if (Settings.DTModifier == false) then
-				gFunc.EquipSet(sets.EnmityTP);
-			else
-				if (Settings.PDTModifier == true) then
-					gFunc.EquipSet(gFunc.Combine(sets.EnmityTP, sets.PDT));
-				elseif (Settings.MDTModifier == true) then
-					gFunc.EquipSet(gFunc.Combine(sets.EnmityTP, sets.MDT));
-				--Place FR/IR/TR Resist toggles here, mind the koga tekko if sets include hands
-				end
-			end
+		local tpset = (Settings.Mode .. 'TP');
+		if (Settings.DTModifier ~= 'OFF') then
+			gFunc.EquipSet(tpset);
+			gFunc.EquipSet(Settings.DTModifier);
 		else
+			gFunc.EquipSet(tpset);
 		end
+	--Resting Sets
     elseif (player.Status == 'Resting') then
         gFunc.EquipSet(sets.Resting);
+	--Regen Idle Sets
 	elseif (player.HPP < 100) then
-		if (Settings.EvasionMode == true) then
+		if (Settings.Mode == 'Evasion') then
 			gFunc.EquipSet(gFunc.Combine(sets.EvasionIdle,sets.Regen));
-		elseif (Settings.StaffMode == true or Settings.EnmityMode == true) then
+		elseif (Settings.Mode == 'Staff' or Settings.Mode == 'Enmity') then
 			gFunc.EquipSet(gFunc.Combine(sets.Idle,sets.Regen));
 			gFunc.Equip('Main', 'Terra\'s Staff');
 			gFunc.Equip('Sub', '');
 		else			
 			gFunc.EquipSet(gFunc.Combine(sets.Idle,sets.Regen));
 		end
+	--Idle Sets
 	else
-		if (Settings.EvasionMode == true) then
+		if (Settings.Mode == 'Evasion') then
 			gFunc.EquipSet(sets.EvasionIdle);
-		elseif (Settings.StaffMode == true or Settings.EnmityMode == true) then
+		elseif (Settings.Mode == 'Staff' or Settings.Mode == 'Enmity') then
 			gFunc.EquipSet(sets.Idle);
 			gFunc.Equip('Main', 'Terra\'s Staff');
 			gFunc.Equip('Sub', '');
@@ -568,10 +399,12 @@ profile.HandleDefault = function()
 		end
     end
 	
+	--Moving Handling; note the time, nq is 18 to 8, hq 17 to 7
 	if (player.IsMoving == true) and (environment.Time < 7.00 or environment.Time > 17.00) then
 		gFunc.Equip('Feet', 'Nin. Kyahan +1');
 	end
 	
+	--KogaSwap Handling; note the time, nq is 18 to 8, hq 17 to 7
 	if (environment.Time < 6.00 or environment.Time > 18.00) then
 		Settings.KogaSwap = 'Koga Tekko';
 	else
@@ -583,6 +416,7 @@ end
 profile.HandleAbility = function()
 	local ability = gData.GetAction();
 
+	--Ability handling; no reason not to just slam enmity into the sets, maybe worth considering only doing this when mode = enmity?
     if (ability.Name == 'Provoke') then
         gFunc.EquipSet(sets.Enmity);
 	elseif (ability.Name == 'Yonin') then
@@ -593,16 +427,6 @@ profile.HandleAbility = function()
 		gFunc.EquipSet(sets.Enmity);
 	elseif (ability.Name == 'Weapon Bash') then
 		gFunc.EquipSet(sets.Enmity);
-	-- elseif (ability.Name == 'Jump') then
-        -- gFunc.EquipSet(sets.Jump);
-	-- elseif (ability.Name == 'Spirit Link') then
-        -- gFunc.EquipSet(sets.SpiritLink);
-	-- elseif (ability.Name == 'High Jump') then
-        -- gFunc.EquipSet(sets.HighJump);
-	-- elseif (ability.Name == 'Steady Wing') then
-        -- gFunc.EquipSet(sets.SteadyWing);
-	-- elseif (ability.Name == 'Angon') then
-        -- gFunc.EquipSet(sets.Angon);
     end
 	
 end
@@ -610,6 +434,7 @@ end
 profile.HandleItem = function()
     local item = gData.GetAction();
 
+	--sneak/invis item handling; maybe this shit matters????????? who knows
 	if string.match(item.Name, 'Silent Oil') then 
 		gFunc.EquipSet(sets.Sneak);
 	elseif string.match(item.Name, 'Prism Powder') then 
@@ -620,7 +445,8 @@ end
 profile.HandlePrecast = function()
     local spell = gData.GetAction();
     
-	if (Settings.DTModifier == false) then
+	--Fast cast handling; note we don't do fast cast gear if we're actively using DT modifiers
+	if (Settings.DTModifier == 'OFF') then
 		gFunc.EquipSet(sets.Precast);
 	end	
 	
@@ -639,7 +465,7 @@ profile.HandleMidcast = function()
 	--Constant handling time in seconds to leave before spell completion.  Note: Up to 400ms of wait from packet handling.
 	local minimumBuffer = 0.60;
 	
-	--fastCastValue handling
+	--fastCastValue handling, so that we can set castDelay appropriately
 	--!!!!!!!!!NOTE: UPDATE gearFastCast VALUE IF PRECAST SET CHANGES!!!!!!!!!!!
 	local gearFastCast = 0.02
 	if (player.SubJob == 'RDM') then
@@ -656,18 +482,15 @@ profile.HandleMidcast = function()
 		end
 	end
 	
-	--set castDelay Variable
+	--set castDelay Variable; important for figuring out interim equip set equipping duration
 	local castDelay = ((spell.CastTime * (1 - fastCastValue)) / 1000) - minimumBuffer;
 	
 	--Ninjutsu spell handling; note MidCastDelays, checks for defense modifiers other than pdt, koga tekko handling, and ele staff handling
     if spell.Skill == 'Ninjutsu' then
-        if (NinNukes:contains(spell.Name)) then
-			if (Settings.MDTModifier == true) then
-				gFunc.InterimEquipSet(sets.MDT);
-				gFunc.SetMidDelay(castDelay);
-				gFunc.EquipSet(sets.Nuke);
-			elseif (Settings.FRModifier == true) then
-				gFunc.InterimEquipSet(sets.FR);
+        --Nuke Handling
+		if (NinNukes:contains(spell.Name)) then
+			if (Settings.DTModifier ~= 'OFF') then
+				gFunc.InterimEquipSet(Settings.DTModifier);
 				gFunc.SetMidDelay(castDelay);
 				gFunc.EquipSet(sets.Nuke);
 			else
@@ -675,13 +498,10 @@ profile.HandleMidcast = function()
 				gFunc.SetMidDelay(castDelay);
 				gFunc.EquipSet(sets.Nuke);
 			end
+		--Utsu Handling
 		elseif string.match(spell.Name, 'Utsusemi') then
-			if (Settings.MDTModifier == true) then
-				gFunc.InterimEquipSet(sets.MDT);
-				gFunc.SetMidDelay(castDelay);
-				gFunc.EquipSet(sets.Haste);
-			elseif (Settings.FRModifier == true) then
-				gFunc.InterimEquipSet(sets.FR);
+			if (Settings.DTModifier ~= 'OFF') then
+				gFunc.InterimEquipSet(Settings.DTModifier);
 				gFunc.SetMidDelay(castDelay);
 				gFunc.EquipSet(sets.Haste);
 			else
@@ -689,21 +509,17 @@ profile.HandleMidcast = function()
 				gFunc.SetMidDelay(castDelay);
 				gFunc.EquipSet(sets.Haste);
 			end
+		--Monomi and Tonko Handling
 		elseif string.match(spell.Name, 'Monomi: Ichi') and (target.Name == me) then
             gFunc.EquipSet(gFunc.Combine(sets.Haste, sets.Sneak));
 		elseif string.match(spell.Name, 'Tonko') and (target.Name == me) then
             gFunc.EquipSet(gFunc.Combine(sets.Haste, sets.Invisible));
-		elseif (EnmitySpells:contains(spell.Name)) and (Settings.EnmityMode == true or Settings.StaffMode == true) then
-			if (Settings.EnmityMode == true) then
-				if (Settings.MDTModifier == true) then
-					gFunc.InterimEquipSet(sets.MDT);
-					gFunc.SetMidDelay(castDelay);
-					gFunc.EquipSet(sets.Enmity);
-					if string.match(spell.Name, 'Hojo: Ni') then
-						gFunc.Equip('Main', 'Jupiter\'s Staff');
-					end
-				elseif (Settings.FRModifier == true) then
-					gFunc.InterimEquipSet(sets.FR);
+		--Enmity Ninjutsu Handling under staff wielding modes; note special handling for Hojo: Ni so it doesn't land
+		elseif (EnmitySpells:contains(spell.Name)) and (Settings.Mode == 'Enmity' or Settings.Mode == 'Staff') then
+			--Enmity Mode Handling of Enmity Ninjutsu; note it does not equip to main except for Hojo: Ni
+			if (Settings.Mode == 'Enmity') then
+				if (Settings.DTModifier ~= 'OFF') then
+					gFunc.InterimEquipSet(Settings.DTModifier);
 					gFunc.SetMidDelay(castDelay);
 					gFunc.EquipSet(sets.Enmity);
 					if string.match(spell.Name, 'Hojo: Ni') then
@@ -717,15 +533,10 @@ profile.HandleMidcast = function()
 						gFunc.Equip('Main', 'Jupiter\'s Staff');
 					end
 				end
-				--swaps to appropriate staff if in staffmode
-			elseif (Settings.StaffMode == true) then
-				if (Settings.MDTModifier == true) then
-					gFunc.InterimEquipSet(sets.MDT);
-					gFunc.SetMidDelay(castDelay);
-					gFunc.EquipSet(gFunc.Combine(sets.Haste,sets.NinjutsuSkill));
-					gFunc.Equip('main', staves[spell.Element]);
-				elseif (Settings.FRModifier == true) then
-					gFunc.InterimEquipSet(sets.FR);
+			--Staff Mode Handling of Enmity Ninjutsu; note equips appropriate staves in pursuit of accurate debuffs
+			elseif (Settings.Mode == 'Staff') then
+				if (Settings.DTModifier ~= 'OFF') then
+					gFunc.InterimEquipSet(Settings.DTModifier);
 					gFunc.SetMidDelay(castDelay);
 					gFunc.EquipSet(gFunc.Combine(sets.Haste,sets.NinjutsuSkill));
 					gFunc.Equip('main', staves[spell.Element]);
@@ -736,28 +547,22 @@ profile.HandleMidcast = function()
 					gFunc.Equip('main', staves[spell.Element]);
 				end
 			end
+		--General Ninjutsu Handling; note that it equips staves if you have 0 tp no matter what
 		else
-			if (Settings.MDTModifier == true) then
-				gFunc.InterimEquipSet(sets.MDT);
+			if (Settings.DTModifier ~= 'OFF') then
+				gFunc.InterimEquipSet(Settings.DTModifier);
 				gFunc.SetMidDelay(castDelay);
 				gFunc.EquipSet(gFunc.Combine(sets.Haste,sets.NinjutsuSkill));
-					if (Settings.StaffMode == true or Settings.EnmityMode == true  or player.TP == 0) then
-						gFunc.Equip('main', staves[spell.Element]);
-					end
-			elseif (Settings.FRModifier == true) then
-				gFunc.InterimEquipSet(sets.FR);
-				gFunc.SetMidDelay(castDelay);
-				gFunc.EquipSet(gFunc.Combine(sets.Haste,sets.NinjutsuSkill));
-					if (Settings.StaffMode == true or Settings.EnmityMode == true or player.TP == 0) then
-						gFunc.Equip('main', staves[spell.Element]);
-					end
+				if (Settings.Mode == 'Enmity' or Settings.Mode == 'Staff' or player.TP == 0) then
+					gFunc.Equip('main', staves[spell.Element]);
+				end
 			else
 				gFunc.InterimEquipSet(sets.PDT);
 				gFunc.SetMidDelay(castDelay);
 				gFunc.EquipSet(gFunc.Combine(sets.Haste,sets.NinjutsuSkill));
-					if (Settings.StaffMode == true or Settings.EnmityMode == true or player.TP == 0) then
-						gFunc.Equip('main', staves[spell.Element]);
-					end
+				if (Settings.Mode == 'Enmity' or Settings.Mode == 'Staff' or player.TP == 0) then
+					gFunc.Equip('main', staves[spell.Element]);
+				end
 			end
         end
 	--Enhancing spell handling; note same as Ninjutsu
@@ -767,12 +572,8 @@ profile.HandleMidcast = function()
 		elseif string.match(spell.Name, 'Invisible') then
             gFunc.EquipSet(gFunc.Combine(sets.Haste, sets.Invisible));
 		else 
-			if (Settings.MDTModifier == true) then
-				gFunc.InterimEquipSet(sets.MDT);
-				gFunc.SetMidDelay(castDelay);
-				gFunc.EquipSet(sets.Haste);
-			elseif (Settings.FRModifier == true) then
-				gFunc.InterimEquipSet(sets.FR);
+			if (Settings.DTModifier ~= 'OFF') then
+				gFunc.InterimEquipSet(Settings.DTModifier);
 				gFunc.SetMidDelay(castDelay);
 				gFunc.EquipSet(sets.Haste);
 			else
@@ -783,14 +584,10 @@ profile.HandleMidcast = function()
         end
 	--Non-ninjutsu enmity spell handling; note MidCastDelays and checks for defense modifiers other than pdt, no Koga Tekko; also note Stun staff handling
 	elseif (EnmitySpells:contains(spell.Name)) and (spell.Skill ~= 'Ninjutsu') then
-		if (string.match(spell.Name, 'Stun')) and (Settings.EnmityMode == true) then
-			if (Settings.MDTModifier == true) then
-				gFunc.InterimEquipSet(sets.MDT);
-				gFunc.SetMidDelay(castDelay);
-				gFunc.EquipSet(sets.Enmity);
-				gFunc.Equip('main', staves[spell.Element]);
-			elseif (Settings.FRModifier == true) then
-				gFunc.InterimEquipSet(sets.FR);
+		--Stun Handling; note attempt to land stun without compromising enmity gained
+		if (string.match(spell.Name, 'Stun')) and (Settings.Mode == 'Enmity') then
+			if (Settings.DTModifier ~= 'OFF') then
+				gFunc.InterimEquipSet(Settings.DTModifier);
 				gFunc.SetMidDelay(castDelay);
 				gFunc.EquipSet(sets.Enmity);
 				gFunc.Equip('main', staves[spell.Element]);
@@ -800,13 +597,10 @@ profile.HandleMidcast = function()
 				gFunc.EquipSet(sets.Enmity);
 				gFunc.Equip('main', staves[spell.Element]);
 			end
+		--Other Non-stun Non-ninjutsu enmity spells while in enmity mode handling
 		else
-			if (Settings.MDTModifier == true) then
-				gFunc.InterimEquipSet(sets.MDT);
-				gFunc.SetMidDelay(castDelay);
-				gFunc.EquipSet(sets.Enmity);
-			elseif (Settings.FRModifier == true) then
-				gFunc.InterimEquipSet(sets.FR);
+			if (Settings.DTModifier ~= 'OFF') then
+				gFunc.InterimEquipSet(Settings.DTModifier);
 				gFunc.SetMidDelay(castDelay);
 				gFunc.EquipSet(sets.Enmity);
 			else
@@ -815,32 +609,26 @@ profile.HandleMidcast = function()
 				gFunc.EquipSet(sets.Enmity);
 			end
 		end
-	--Misc spells; note same as Ninjutsu
+	--Misc spells handling; note same as Ninjutsu; note staff mode staff equipping
 	else
-		if (Settings.MDTModifier == true) then
-			gFunc.InterimEquipSet(sets.MDT);
+		if (Settings.DTModifier ~= 'OFF') then
+			gFunc.InterimEquipSet(Settings.DTModifier);
 			gFunc.SetMidDelay(castDelay);
 			gFunc.EquipSet(sets.Haste);
-			if (Settings.StaffMode == true) then
-				gFunc.Equip('main', staves[spell.Element]);
-			end
-		elseif (Settings.FRModifier == true) then
-			gFunc.InterimEquipSet(sets.FR);
-			gFunc.SetMidDelay(castDelay);
-			gFunc.EquipSet(sets.Haste);
-			if (Settings.StaffMode == true) then
+			if (Settings.Mode == 'Staff') then
 				gFunc.Equip('main', staves[spell.Element]);
 			end
 		else
 			gFunc.InterimEquipSet(sets.PDT);
 			gFunc.SetMidDelay(castDelay);
 			gFunc.EquipSet(sets.Haste);
-			if (Settings.StaffMode == true) then
+			if (Settings.Mode == 'Staff') then
 				gFunc.Equip('main', staves[spell.Element]);
 			end
 		end
     end
 	
+	--KogaSwap Handling in midcast
 	if (environment.Time < 6.00 or environment.Time > 18.00) then
 		Settings.KogaSwap = 'Koga Tekko';
 	else
@@ -859,13 +647,7 @@ end
 profile.HandleWeaponskill = function()
 	local ws = gData.GetAction();
     
-    -- if (ws.Name == "Wheeling Thrust") then
-		-- gFunc.EquipSet(sets.Wheeling)
-	-- elseif (ws.Name == "Impulse Drive") then
-		-- gFunc.EquipSet(sets.Impulse)
-	-- else
 		gFunc.EquipSet(sets.WS)
-	-- end
 	
 end
 
