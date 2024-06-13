@@ -4,7 +4,7 @@ local Settings = {
 	player = gData.GetPlayer(),
 	Mode = 'Normal',
 	DTModifier = 'OFF',	
-	KogaSwap = 'Dusk Gloves',
+	KogaSwap = 'Koga Tekko',
 	
 	CurrentLevel = 0,
 };
@@ -69,6 +69,8 @@ local sets = {
     },
 	
 	AccuracyTP_Priority = {
+		Main = 'Senjuinrikio',
+		Sub = 'Fudo',
 		Ammo = 'Tiphia Sting',
         Head = 'Shr.Znr.Kabuto',
         Neck = 'Peacock Amulet',
@@ -158,11 +160,9 @@ local sets = {
 	},
 
     Haste_Priority = {
+		BaseSet = 'PDT',
         Head = 'Panther Mask', --2%
-		Body = 'Arhat\'s Gi +1',
 		Hands = Settings.KogaSwap,
-        Ear1 = 'Novia Earring',
-        Ear2 = 'Ethereal Earring',
         Waist = 'Koga Sarashi', --4%
         Legs = 'Byakko\'s Haidate', --5%
 		Feet = 'Fuma Sune-Ate', --3%
@@ -178,6 +178,7 @@ local sets = {
         Ear2 = 'Novio Earring',
 		Ring1 = 'Snow Ring',
 		Ring2 = 'Snow Ring',
+		Back = 'Astute Cape',
         Waist = 'Koga Sarashi',
 		Legs = 'Yasha Hakama',
 		Feet = 'Nin. Kyahan +1',
@@ -215,8 +216,11 @@ local sets = {
     },
 	
     NinjutsuSkill = {
+		Head = 'Ninja Hatsuburi',
         Ear2 = 'Stealth Earring',
+		Back = 'Astute Cape',
         Waist = 'Koga Sarashi',
+		Feet = 'Kog. Kyahan +1',
     },
 	
     PDT = {
@@ -338,9 +342,9 @@ end
 
 profile.UpdateSets = function()
 	--These define slots in various sets where Koga Tekko might be the better choice depending on time of day; KogaSwap handling present in default and midcast
-	sets.Haste_Priority.Hands = Settings.KogaSwap;
-	sets.TP_Priority.Hands = Settings.KogaSwap;
-	sets.EvasionTP_Priority.Hands = Settings.KogaSwap;
+	sets.Haste.Hands = Settings.KogaSwap;
+	sets.NormalTP.Hands = Settings.KogaSwap;
+	sets.EvasionTP.Hands = Settings.KogaSwap;
 	
 end
 
@@ -375,6 +379,9 @@ profile.HandleDefault = function()
 	--Resting Sets
     elseif (player.Status == 'Resting') then
         gFunc.EquipSet(sets.Resting);
+		if (Settings.Mode == 'Staff') then
+			gFunc.Equip('Main', 'Pluto\'s Staff');
+		end
 	--Regen Idle Sets
 	elseif (player.HPP < 100) then
 		if (Settings.Mode == 'Evasion') then
@@ -407,8 +414,10 @@ profile.HandleDefault = function()
 	--KogaSwap Handling; note the time, nq is 18 to 8, hq 17 to 7
 	if (environment.Time < 6.00 or environment.Time > 18.00) then
 		Settings.KogaSwap = 'Koga Tekko';
+		profile.UpdateSets();
 	else
 		Settings.KogaSwap = 'Dusk Gloves';
+		profile.UpdateSets();
 	end
 	
 end
@@ -636,9 +645,14 @@ profile.HandleMidcast = function()
 	
 	--KogaSwap Handling in midcast
 	if (environment.Time < 6.00 or environment.Time > 18.00) then
+		gFunc.Echo(158, "Koga Tekko");
 		Settings.KogaSwap = 'Koga Tekko';
+		profile.UpdateSets();
 	else
+		gFunc.Echo(158, Settings.KogaSwap);
 		Settings.KogaSwap = 'Dusk Gloves';
+		gFunc.Echo(158, Settings.KogaSwap);
+		profile.UpdateSets();
 	end
 end
 
