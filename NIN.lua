@@ -645,13 +645,10 @@ profile.HandleMidcast = function()
 	
 	--KogaSwap Handling in midcast
 	if (environment.Time < 6.00 or environment.Time > 18.00) then
-		gFunc.Echo(158, "Koga Tekko");
 		Settings.KogaSwap = 'Koga Tekko';
 		profile.UpdateSets();
 	else
-		gFunc.Echo(158, Settings.KogaSwap);
 		Settings.KogaSwap = 'Dusk Gloves';
-		gFunc.Echo(158, Settings.KogaSwap);
 		profile.UpdateSets();
 	end
 end
