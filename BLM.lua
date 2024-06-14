@@ -158,7 +158,6 @@ local sets = {
 	},
 	
     Stoneskin = {
-        Main = 'Kirin\'s Pole',
         Head = 'Zenith Crown',
         Neck = 'Promise Badge',
         Ear1 = 'Loquac. Earring',

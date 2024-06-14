@@ -302,6 +302,7 @@ profile.OnUnload = function()
 end
 
 profile.HandleCommand = function(args)
+	local spell = gData.GetAction();
 	
 	--Mode Toggle; need to make macros that send
 		--/nin mode Normal
@@ -338,6 +339,11 @@ profile.HandleCommand = function(args)
 		end
 	end
 	
+	--Wheeling Functionality; create table with nin ni nukes with associated data, create if statement checking if anything else is currently happening and put in return + echo if so, then put in if statement checking where the process is in the wheel sequence and cast the next nuke in the wheel, then iterate in the wheel list
+	if (args[1] == 'Wheel' then
+		--fix this, associate each spell with element and maybe tool name and tool item id?  figure out if you can even do that in LAC
+		local NinNukes = T{'Katon: Ichi', 'Katon: Ni', 'Hyoton: Ichi', 'Hyoton: Ni', 'Huton: Ichi', 'Huton: Ni', 'Doton: Ichi', 'Doton: Ni', 'Raiton: Ichi', 'Raiton: Ni', 'Suiton: Ichi', 'Suiton: Ni'}
+		if spell.midcast
 end
 
 profile.UpdateSets = function()
