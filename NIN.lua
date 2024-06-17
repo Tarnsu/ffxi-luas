@@ -303,6 +303,7 @@ end
 
 profile.HandleCommand = function(args)
 	local spell = gData.GetAction();
+	local i = 0;
 	
 	--Mode Toggle; need to make macros that send
 		--/nin mode Normal
@@ -341,13 +342,17 @@ profile.HandleCommand = function(args)
 	
 	--Wheeling Functionality; create table with nin ni nukes with associated data, create if statement checking if anything else is currently happening and put in return + echo if so, then put in if statement checking where the process is in the wheel sequence and cast the next nuke in the wheel, then iterate in the wheel list
 	if (args[1] == 'Wheel') then
+		if (i == 6 or 0) then
+			i = 1;
+		end
+		
 		local NinNukes = T{
-			{'thunder', 'Raiton: Ni'},
-			{'earth', 'Doton: Ni'},
-			{'wind', 'Huton: Ni'},
-			{'ice', 'Hyoton: Ni'},
-			{'fire', 'Katon: Ni'},
-			{'water', 'Suiton: Ni'},
+			{'wind', 'Huton', 327},
+			{'ice', 'Hyoton', 324},
+			{'fire', 'Katon', 321},
+			{'water', 'Suiton', 336},
+			{'thunder', 'Raiton', 333},
+			{'earth', 'Doton', 330},
 			-- thunder = {name = 'Raiton: Ni'},
 			-- earth = {name = 'Doton: Ni'},
 			-- wind = {name = 'Huton: Ni'},
@@ -355,15 +360,58 @@ profile.HandleCommand = function(args)
 			-- fire = {name = 'Katon: Ni'},
 			-- water = {name = 'Suiton: Ni'},
 		}
-		local spell = gData.GetAction();
-		
-		if (spell.NinNukes[2])
-		
-		--fix this, associate each spell with element and maybe tool name and tool item id?  figure out if you can even do that in LAC
-		--local NinNukes = T{'Katon: Ichi', 'Katon: Ni', 'Hyoton: Ichi', 'Hyoton: Ni', 'Huton: Ichi', 'Huton: Ni', 'Doton: Ichi', 'Doton: Ni', 'Raiton: Ichi', 'Raiton: Ni', 'Suiton: Ichi', 'Suiton: Ni'}
-		--if spell.midcast
-		then
+		local NextSpellID = NinNukes[i][3];
+		if (i == 1) then
+			local LastSpellID = NinNukes[6][3];
+		else
+			local LastSpellID = NinNukes[i-1][3];
 		end
+		
+		-- for x = 321, 336 do
+			-- local recastId = x;
+			-- local recastTimer = ashita.ffxi.recast.get_spell_recast_by_index(x);
+
+			gFunc.Echo(158, 'test1')
+		
+		local NextRecast = tonumber(AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(NextSpellID))/60;
+		local LastRecast = tonumber(AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(LastSpellID))/60;
+		
+		gFunc.Echo(158, 'test2')
+		
+		if (NextRecast == 0) and (LastRecast > 0) then
+			AshitaCore:GetChatManager():QueueCommand(1, '/ma "' + NinNukes[i][2] + ': Ni" <t>');
+			--AshitaCore:GetChatManager():QueueCommand(1, '/ma "' + NinNukes[i][2] + ': Ichi" <t>');
+			gFunc.Echo(158, 'Casting ' + NinNukes[i][2] + ': Ni. ' + NinNukes[i+1][2] + ': Ni is next.')
+			--maybe put a clock time wait here, like 4 seconds, and then check if the NextRecast is >0, and
+			--if it is, then i++, and then if you do i++, idk make it so it discards all queued Wheel args?
+			--god this is such a mess
+		elseif (NextRecast > 0) then
+			gFunc.Echo(158, NinNukes[i][2] + ': Ni is not ready.  Remaining recast: ' + NextRecast)
+		elseif (LastRecast == 0) then
+			gFunc.Echo(158, NinNukes[i-1][2] + ': Ni either did not cast or wasn\'t cast in time.  Restarting Wheel.')
+			local totalOnCooldown = 0;
+			for j = 1, 6, 1 do
+				if (Recast.GetAbilityRecastById(NinNukes[j][3]) == 0) then --AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(NinNukes[j][3]) == 0) then
+					gFunc.Echo(158, 'Starting from ' + NinNukes[j][2] + ': Ni.')
+					AshitaCore:GetChatManager():QueueCommand(1, '/ma "' + NinNukes[j][2] + ': Ni" <t>');
+					i = j;
+					j = 6; -- gotta add handling for if THIS spell fails
+				end	
+				totalOnCooldown = totalOnCooldown + 1;
+			end
+			if (totalOnCooldown == 6) then
+				gFunc.Echo(158, 'None of your Ni nukes are off cooldown!!!! probably should add some ichi spell handling too lol!!!!')
+			end
+			-- else
+				-- gFunc.Echo(158, 'Huton: Ni Recast not up.  Starting from previous nuke')
+				-- AshitaCore:GetChatManager():QueueCommand(1, '/ma "' + NinNukes[i-1[2]] + ': Ni" <t>');
+		end	
+			
+		
+			
+			--fix this, associate each spell with element and maybe tool name and tool item id?  figure out if you can even do that in LAC
+			--local NinNukes = T{'Katon: Ichi', 'Katon: Ni', 'Hyoton: Ichi', 'Hyoton: Ni', 'Huton: Ichi', 'Huton: Ni', 'Doton: Ichi', 'Doton: Ni', 'Raiton: Ichi', 'Raiton: Ni', 'Suiton: Ichi', 'Suiton: Ni'}
+			--if spell.midcast
 	end
 end
 
