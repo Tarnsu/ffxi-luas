@@ -340,10 +340,31 @@ profile.HandleCommand = function(args)
 	end
 	
 	--Wheeling Functionality; create table with nin ni nukes with associated data, create if statement checking if anything else is currently happening and put in return + echo if so, then put in if statement checking where the process is in the wheel sequence and cast the next nuke in the wheel, then iterate in the wheel list
-	if (args[1] == 'Wheel' then
+	if (args[1] == 'Wheel') then
+		local NinNukes = T{
+			{'thunder', 'Raiton: Ni'},
+			{'earth', 'Doton: Ni'},
+			{'wind', 'Huton: Ni'},
+			{'ice', 'Hyoton: Ni'},
+			{'fire', 'Katon: Ni'},
+			{'water', 'Suiton: Ni'},
+			-- thunder = {name = 'Raiton: Ni'},
+			-- earth = {name = 'Doton: Ni'},
+			-- wind = {name = 'Huton: Ni'},
+			-- ice = {name = 'Hyoton: Ni'},
+			-- fire = {name = 'Katon: Ni'},
+			-- water = {name = 'Suiton: Ni'},
+		}
+		local spell = gData.GetAction();
+		
+		if (spell.NinNukes[2])
+		
 		--fix this, associate each spell with element and maybe tool name and tool item id?  figure out if you can even do that in LAC
-		local NinNukes = T{'Katon: Ichi', 'Katon: Ni', 'Hyoton: Ichi', 'Hyoton: Ni', 'Huton: Ichi', 'Huton: Ni', 'Doton: Ichi', 'Doton: Ni', 'Raiton: Ichi', 'Raiton: Ni', 'Suiton: Ichi', 'Suiton: Ni'}
-		if spell.midcast
+		--local NinNukes = T{'Katon: Ichi', 'Katon: Ni', 'Hyoton: Ichi', 'Hyoton: Ni', 'Huton: Ichi', 'Huton: Ni', 'Doton: Ichi', 'Doton: Ni', 'Raiton: Ichi', 'Raiton: Ni', 'Suiton: Ichi', 'Suiton: Ni'}
+		--if spell.midcast
+		then
+		end
+	end
 end
 
 profile.UpdateSets = function()
@@ -673,5 +694,27 @@ profile.HandleWeaponskill = function()
 		gFunc.EquipSet(sets.WS)
 	
 end
+
+ashita.events.register('packet_in', 'packet_in_cb', function(e)
+    local party = AshitaCore:GetMemoryManager():GetParty()
+
+    if e.id == 0x28 then
+        --don't parse if it's not player's action
+        local player = struct.unpack('I', e.data, 6); 
+        if (player ~= party:GetMemberServerId(0)) then 
+            return
+        end 
+
+        --Stop parsing if it's not a spell complete
+        local retType = ashita.bits.unpack_be(e.data_raw, 82, 4);
+        if (retType ~= 4) then
+            return;
+        end
+
+        --Get spell ID from completed spell
+        local spellId = ashita.bits.unpack_be(e.data_raw, 86, 17);
+        gFunc.Echo(135, "Spellcast complete! Spellid: " .. spellId);
+    end
+end);
 
 return profile;
