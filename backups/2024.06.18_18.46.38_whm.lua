@@ -132,22 +132,11 @@ local sets = {
 	CureVPlus = {
 		BaseSet = 'CureItoIV',
 		Body = 'Noble\'s Tunic',
-	},
+	}
 	
 	Haste = {
-		Head = 'Nashira Turban',
-		Ear2 = 'Loquac. Earring',
-        Hands = 'Blessed Mitts',
-        Waist = 'Swift Belt',
-        Legs = 'Blessed Trousers',
-        Feet = 'Blessed Pumps +1',
-	},
-	
-	OtherHealing = {
-		BaseSet = 'Haste',
-        Ear1 = 'Novia Earring',
-        Body = 'Raven Jupon',
-    },
+		
+	}
 	
     Enhancing = {
         Neck = 'Enhancing Torque',
@@ -345,8 +334,8 @@ profile.HandleMidcast = function()
 	local MNDEnfeebs = T{'Paralyze', 'Slow'};
 	local BarSpells = T{'Barfira', 'Barblizzara', 'Baraera', 'Barstonra', 'Barthundra', 'Barwatera','Barsleepra', 'Barpoisonra', 'Barparalyzra', 'Barblindra', 'Barsilencera', 'Barpetra', 'Barvira', 'Baramnesra'};
 	local RegenSpells = T{'Regen', 'Regen II', 'Regen III'};
-	local CureItoIV = T{'Cure', 'Cure II', 'Cure III', 'Cure IV', 'Curaga', 'Curaga II', 'Curaga III', 'Curaga IV', 'Cura', 'Cura II', 'Cura III', 'Full Cure'};
-	local CureVPlus = T{'Cure V', 'Cure VI', 'Curaga V'};
+	local CureItoIV = T{'Cure', 'Cure II', 'Cure III', 'Cure IV', 'Curaga', 'Curaga II', 'Curaga III', 'Curaga IV', 'Cura', 'Cura II', 'Cura III', 'Full Cure'},
+	local CureVPlus = T{'Cure V', 'Cure VI', 'Curaga V'},
     local spell = gData.GetAction()
 	local target = gData.GetActionTarget()
     local environment = gData.GetEnvironment();
@@ -385,17 +374,15 @@ profile.HandleMidcast = function()
 		--Invisible Gear
 		elseif string.match(spell.Name, 'Invisible') and (target.Name == me) then
             gFunc.EquipSet(sets.Invisible)
-		--Standard Enhancing
+		--Standard Enfeebling
 		elseif string.match(spell.Name, 'Stoneskin') then
 			gFunc.EquipSet(sets.Stoneskin)
 		elseif (BarSpells:contains(spell.Name)) then
 			gFunc.EquipSet(sets.BarSpells)
 		elseif (RegenSpells:contains(spell.Name)) then
 			gFunc.EquipSet(sets.Regen)
-		elseif string.match(spell.Name, 'Boost') then
-			gFunc.EquipSet(sets.Enhancing)
 		else
-			gFunc.EquipSet(sets.OtherHealing)
+			gFunc.EquipSet(sets.Enhancing)
         end
 		
 	--Healing Magic Spells

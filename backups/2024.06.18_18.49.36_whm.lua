@@ -145,9 +145,8 @@ local sets = {
 	
 	OtherHealing = {
 		BaseSet = 'Haste',
-        Ear1 = 'Novia Earring',
-        Body = 'Raven Jupon',
-    },
+		
+	},
 	
     Enhancing = {
         Neck = 'Enhancing Torque',
@@ -385,17 +384,15 @@ profile.HandleMidcast = function()
 		--Invisible Gear
 		elseif string.match(spell.Name, 'Invisible') and (target.Name == me) then
             gFunc.EquipSet(sets.Invisible)
-		--Standard Enhancing
+		--Standard Enfeebling
 		elseif string.match(spell.Name, 'Stoneskin') then
 			gFunc.EquipSet(sets.Stoneskin)
 		elseif (BarSpells:contains(spell.Name)) then
 			gFunc.EquipSet(sets.BarSpells)
 		elseif (RegenSpells:contains(spell.Name)) then
 			gFunc.EquipSet(sets.Regen)
-		elseif string.match(spell.Name, 'Boost') then
-			gFunc.EquipSet(sets.Enhancing)
 		else
-			gFunc.EquipSet(sets.OtherHealing)
+			gFunc.EquipSet(sets.Enhancing)
         end
 		
 	--Healing Magic Spells
