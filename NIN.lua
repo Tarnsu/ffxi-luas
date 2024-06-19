@@ -169,7 +169,7 @@ local sets = {
 	},
 	
 	Nuke_Priority = {
-		Ammo = 'Phtm. Tathlum',
+		Ammo = 'Ensorcelled Shard',
 		Head = 'Yasha Jinpachi',
 		Neck = 'Uggalepih Pendant', --gotta remember to spend down mp
 		Body = 'Kirin\'s Osode',
@@ -186,6 +186,7 @@ local sets = {
 	
 	Enmity_Priority = {
 		BaseSet = 'PDT',
+		Ammo = 'Ensorcelled Shard',
 		Head = 'Arh. Jinpachi +1',
 		Neck = 'Harmonia\'s Torque',
 		Body = 'Arhat\'s Gi +1',
@@ -216,6 +217,7 @@ local sets = {
     },
 	
     NinjutsuSkill = {
+		Ammo = 'Ensorcelled Shard',
 		Head = 'Ninja Hatsuburi',
         Ear2 = 'Stealth Earring',
 		Back = 'Astute Cape',
