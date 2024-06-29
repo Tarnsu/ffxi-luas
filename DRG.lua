@@ -30,7 +30,7 @@ local sets = {
         Neck = 'Love Torque',
         Ear1 = 'Beastly Earring',
         Ear2 = 'Brutal Earring',
-        Body = 'Assault Jerkin',
+        Body = 'Barone Corazza',
         Hands = 'Homam Manopolas',
         Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Rajas Ring',
@@ -102,6 +102,7 @@ local sets = {
     },
 	
     SpiritLink = {
+		Head = 'Drn. Armet +1',
         Neck = 'Promise Badge',
         Ring1 = 'Aqua Ring',
         Ring2 = 'Aqua Ring',
@@ -128,7 +129,7 @@ local sets = {
 	},
 
     SIRD = {
-        Head = 'Drachen Armet',
+        Head = 'Drn. Armet +1',
         Hands = 'Homam Manopolas',
 		Legs = 'Homam Cosciales',
         Feet = 'Homam Gambieras',
@@ -168,12 +169,15 @@ local function HandlePetAction(PetAction)
 	local name = string.sub(PetAction.Name,1,string.len(PetAction.Name)-1);
 	
 	if string.match(name, 'Healing Breath') then
+		gFunc.Echo(158, "healing bwef")
         gFunc.EquipSet(sets.HealingBreath);
     end
 end
 
 profile.OnLoad = function()
 	gSettings.AllowAddSet = true;
+	gFunc.ApplyBaseSets(profile.Sets);	
+	
 end
 
 profile.OnUnload = function()

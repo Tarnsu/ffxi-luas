@@ -7,12 +7,14 @@ profile.OnLoad = function()
 	AshitaCore:GetChatManager():QueueCommand(1, '/macro Book 2');
 	AshitaCore:GetChatManager():QueueCommand(1, '/macro set 1');
 	gFunc.ApplyBaseSets(profile.Sets);
-if (player.SubJob == 'WHM') then
+	
+	if (player.SubJob == 'WHM') then
 	AshitaCore:GetChatManager():QueueCommand(1, '/macro set 4');
 	else 
 	AshitaCore:GetChatManager():QueueCommand(1, '/macro set 1');
 	end
 
+	gFunc.ApplyBaseSets(profile.Sets);	
 end
 
 profile.OnUnload = function()
@@ -85,7 +87,7 @@ local sets = {
 		 Feet = 'Angler\'s Boots',
     },
 	Idle_PDT = {
-		Head = 'Darksteel Cap +1 +1',
+		Head = 'Darksteel Cap +1',
 		Ear1 = 'Merman\'s Earring',
 		Ear2 = 'Merman\'s Earring',
 		Body = 'Dst. Harness +1',

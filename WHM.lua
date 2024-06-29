@@ -59,11 +59,11 @@ local sets = {
         Neck = 'Elemental Torque',
         Ear1 = 'Morion Earring',
         Ear2 = 'Cunning Earring',
-        Body = 'Errant Hpl.',
+        Body = 'Mahatma Hpl.',
         Hands = 'Errant Cuffs',
         Ring1 = 'Diamond Ring',
         Ring2 = 'Diamond Ring',
-        Back = 'Rainbow Cape',
+        Back = 'Prism Cape',
         Waist = 'Penitent\'s Rope',
         Legs = 'Mahatma Slops',
         Feet = 'Rostrum Pumps',
@@ -79,7 +79,7 @@ local sets = {
         Hands = 'Cleric\'s Mitts',
         Ring1 = 'Diamond Ring',
         Ring2 = 'Diamond Ring',
-        Back = 'Rainbow Cape',
+        Back = 'Prism Cape',
         Waist = 'Penitent\'s Rope',
         Legs = 'Nashira Seraweels',
         Feet = 'Rostrum Pumps',
@@ -94,7 +94,7 @@ local sets = {
         Hands = 'Cleric\'s Mitts',
         Ring1 = 'Aqua Ring',
         Ring2 = 'Aqua Ring',
-        Back = 'Rainbow Cape',
+        Back = 'Prism Cape',
         Waist = 'Cleric\'s Belt',
         Legs = 'Nashira Seraweels',
         Feet = 'Clr. Duckbills +1',
@@ -123,7 +123,7 @@ local sets = {
         Hands = 'Healer\'s Mitts',
         Ring1 = 'Aqua Ring',
         Ring2 = 'Aqua Ring',
-        Back = 'Rainbow Cape',
+        Back = 'Prism Cape',
         Waist = 'Penitent\'s Rope',
         Legs = 'Blessed Trousers',
         Feet = 'Blessed Pumps +1',
@@ -174,11 +174,11 @@ local sets = {
         Neck = 'Promise Badge',
         Ear1 = 'Geist Earring',
         Ear2 = 'Geist Earring',
-        Body = 'Errant Hpl.',
+        Body = 'Mahatma Hpl.',
         Hands = 'Blessed Mitts',
         Ring1 = 'Aqua Ring',
         Ring2 = 'Aqua Ring',
-        Back = 'Rainbow Cape',
+        Back = 'Prism Cape',
         Waist = 'Cleric\'s Belt',
         Legs = 'Mahatma Slops',
         Feet = 'Clr. Duckbills +1',
@@ -190,11 +190,11 @@ local sets = {
         Neck = 'Promise Badge',
         Ear1 = 'Moldavite Earring',
         Ear2 = 'Novio Earring',
-        Body = 'Errant Hpl.',
+        Body = 'Mahatma Hpl.',
         Hands = 'Blessed Mitts',
         Ring1 = 'Aqua Ring',
         Ring2 = 'Aqua Ring',
-        Back = 'Rainbow Cape',
+        Back = 'Prism Cape',
         Waist = 'Cleric\'s Belt',
         Legs = 'Healer\'s Pantaln.',
         Feet = 'Clr. Duckbills +1',
@@ -259,6 +259,8 @@ profile.OnLoad = function()
     AshitaCore:GetChatManager():QueueCommand(1, '/macro set 1');
     AshitaCore:GetChatManager():QueueCommand(-1, '/alias /whm /lac fwd');
 	AshitaCore:GetChatManager():QueueCommand(-1, '/bind F9 /whm enmityMode');
+	
+	gFunc.ApplyBaseSets(profile.Sets);	
 end
 
 profile.OnUnload = function()

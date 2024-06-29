@@ -296,6 +296,8 @@ profile.OnLoad = function()
     AshitaCore:GetChatManager():QueueCommand(1, '/macro book 5');
     AshitaCore:GetChatManager():QueueCommand(1, '/macro set 1');
     AshitaCore:GetChatManager():QueueCommand(-1, '/alias /nin /lac fwd');
+	
+	gFunc.ApplyBaseSets(profile.Sets);	
 end
 
 profile.OnUnload = function()
@@ -744,27 +746,5 @@ profile.HandleWeaponskill = function()
 		gFunc.EquipSet(sets.WS)
 	
 end
-
-ashita.events.register('packet_in', 'packet_in_cb', function(e)
-    local party = AshitaCore:GetMemoryManager():GetParty()
-
-    if e.id == 0x28 then
-        --don't parse if it's not player's action
-        local player = struct.unpack('I', e.data, 6); 
-        if (player ~= party:GetMemberServerId(0)) then 
-            return
-        end 
-
-        --Stop parsing if it's not a spell complete
-        local retType = ashita.bits.unpack_be(e.data_raw, 82, 4);
-        if (retType ~= 4) then
-            return;
-        end
-
-        --Get spell ID from completed spell
-        local spellId = ashita.bits.unpack_be(e.data_raw, 86, 17);
-        gFunc.Echo(135, "Spellcast complete! Spellid: " .. spellId);
-    end
-end);
 
 return profile;
