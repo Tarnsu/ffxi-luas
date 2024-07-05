@@ -410,7 +410,7 @@ profile.HandleMidcast = function()
 
     --Elemental Magic Spells
     if spell.Skill == 'Elemental Magic' then
-        if (EleDoTs:contains(spell)) then
+        if (EleDoTs:contains(spell.Name)) then
             gFunc.EquipSet(sets.EleDebuff)
         else
 			--Main Nuke Method
@@ -420,7 +420,6 @@ profile.HandleMidcast = function()
 				else
 					gFunc.EquipSet(sets.Nuke_LowSkillHighEnmity);
 				end
-				gFunc.Echo(158, "a")
 				gFunc.Equip('main', staves[spell.Element]);
 			else
 				if Settings.skillMode == 1 then
@@ -428,7 +427,6 @@ profile.HandleMidcast = function()
 				else
 					gFunc.EquipSet(sets.Nuke_LowSkillLowEnmity);
 				end
-				gFunc.Echo(158, "b")
 				gFunc.Equip('main', staves[spell.Element]);
 			end
 			--UggyPendant Check
