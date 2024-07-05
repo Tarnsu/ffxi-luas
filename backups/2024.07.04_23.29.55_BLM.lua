@@ -65,15 +65,13 @@ local sets = {
 	},
 	
 	EleDebuff = {
-        Main = 'Mythic Wand +1',
-        Sub = 'Astral Aspis',
         Ammo = 'Phtm. Tathlum',
-        Head = 'Wzd. Petasos +1',
-        Neck = 'Prudence Torque',
+        Head = 'Src. Petasos +1',
+        Neck = 'Elemental Torque',
         Ear1 = 'Morion Earring +1',
         Ear2 = 'Morion Earring +1',
-        Body = 'Mahatma Hpl.',
-        Hands = 'Errant Cuffs',
+        Body = 'Igqira Weskit',
+        Hands = 'Wizard\'s Gloves',
         Ring1 = 'Snow Ring',
         Ring2 = 'Snow Ring',
         Back = 'Prism Cape',
@@ -420,18 +418,15 @@ profile.HandleMidcast = function()
 				else
 					gFunc.EquipSet(sets.Nuke_LowSkillHighEnmity);
 				end
-				gFunc.Echo(158, "a")
-				gFunc.Equip('main', staves[spell.Element]);
 			else
 				if Settings.skillMode == 1 then
 					gFunc.EquipSet(sets.Nuke_HighSkillLowEnmity);
 				else
 					gFunc.EquipSet(sets.Nuke_LowSkillLowEnmity);
 				end
-				gFunc.Echo(158, "b")
-				gFunc.Equip('main', staves[spell.Element]);
 			end
-			--UggyPendant Check
+            gFunc.Equip('main', staves[spell.Element]);
+            --UggyPendant Check
             if UggyPendant(spell) and Settings.skillMode == 0 then
                 gFunc.EquipSet(sets.UggyPendant);
             end
