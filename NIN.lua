@@ -310,11 +310,11 @@ profile.HandleCommand = function(args)
 	local i = 0;
 	
 	--Mode Toggle; need to make macros that send
-		--/nin mode Normal
-		--/nin mode Accuracy
-		--/nin mode Evasion
-		--/nin mode Staff
-		--/nin mode Enmity
+		--/nin Mode Normal
+		--/nin Mode Accuracy
+		--/nin Mode Evasion
+		--/nin Mode Staff
+		--/nin Mode Enmity
 	--for full functionality
 		
 	if (args[1] == 'Mode') then
